@@ -3,14 +3,14 @@ WITH overall_avg AS(
   SELECT
     AVG(Rounded_Weekly_Sales) AS Overall_Average_Sales
   FROM
-    `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales`
+    `my-database-bigquery.walmart_data.cleaned_walmart_sales`
 ),
 holiday_sales AS(
   SELECT
     Formatted_Date ,
     AVG(Rounded_Weekly_Sales) AS Avg_Weekly_Sales
   FROM
-    `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales`
+    `my-database-bigquery.walmart_data.cleaned_walmart_sales`
   WHERE
     Holiday_Flag = 1
   GROUP BY
@@ -34,7 +34,7 @@ SELECT
   Rounded_CPI ,
   MIN(Rounded_Unemployment) AS Min_Unemployment
 FROM
-  `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales` 
+  `my-database-bigquery.walmart_data.cleaned_walmart_sales` 
 GROUP BY
   Store ,
   Formatted_Date ,
@@ -49,7 +49,7 @@ SELECT
   Rounded_CPI ,
   MAX(Rounded_Unemployment) AS Max_Unemployment
 FROM
-  `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales` 
+  `my-database-bigquery.walmart_data.cleaned_walmart_sales` 
 GROUP BY
   Store ,
   Formatted_Date,
@@ -61,19 +61,19 @@ ORDER BY
 SELECT
   CORR(Rounded_CPI,Rounded_Unemployment) AS Correlation_CPI_Unemp
 FROM
-  `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales` ;
+  `my-database-bigquery.walmart_data.cleaned_walmart_sales` ;
 --
 -- Is there any correlation between CPI and Weekly Sales?  
 SELECT
   CORR(Rounded_CPI, Rounded_Weekly_Sales) AS Correlation_CPI_Sales
 FROM
-  `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales` ;
+  `my-database-bigquery.walmart_data.cleaned_walmart_sales` ;
 --
 -- How does the correlation differ when the Holiday Flag is 0 
 SELECT
   CORR(Rounded_CPI, Rounded_Weekly_Sales) AS Correlation_CPI_NoHoli
 FROM
-  `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales` 
+  `my-database-bigquery.walmart_data.cleaned_walmart_sales` 
 WHERE
   Holiday_Flag = 0;
 --
@@ -81,7 +81,7 @@ WHERE
 SELECT
   CORR(Rounded_CPI, Rounded_Weekly_Sales) AS Correlation_CPI_OnHoli
 FROM
-  `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales` 
+  `my-database-bigquery.walmart_data.cleaned_walmart_sales` 
 WHERE
   Holiday_Flag = 1;
 --
@@ -90,7 +90,7 @@ WHERE
 SELECT
   CORR(Rounded_Fuel_Price, Rounded_Weekly_Sales) AS Correlation_Fuel_Sales
 FROM
-  `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales` ;
+  `my-database-bigquery.walmart_data.cleaned_walmart_sales` ;
 --
 -- What were the sales when fuel was at its max?
 SELECT
@@ -99,9 +99,9 @@ SELECT
   Rounded_Weekly_Sales ,
   Rounded_Fuel_Price
 FROM
-  `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales` 
+  `my-database-bigquery.walmart_data.cleaned_walmart_sales` 
 WHERE
-  Rounded_Fuel_Price = (SELECT MAX(Rounded_Fuel_Price) FROM `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales`);
+  Rounded_Fuel_Price = (SELECT MAX(Rounded_Fuel_Price) FROM `my-database-bigquery.walmart_data.cleaned_walmart_sales`);
 --
 -- What were the sales when fuel was at its min?
 SELECT
@@ -110,8 +110,8 @@ SELECT
   Rounded_Weekly_Sales ,
   Rounded_Fuel_Price
 FROM
-  `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales` 
+  `my-database-bigquery.walmart_data.cleaned_walmart_sales` 
 WHERE
-  Rounded_Fuel_Price = (SELECT MIN(Rounded_Fuel_Price) FROM `decisive-lambda-424322-u1.walmart_data.cleaned_walmart_sales`);
+  Rounded_Fuel_Price = (SELECT MIN(Rounded_Fuel_Price) FROM `my-database-bigquery.walmart_data.cleaned_walmart_sales`);
 --
 --
